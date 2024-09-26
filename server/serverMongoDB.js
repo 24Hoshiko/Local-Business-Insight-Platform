@@ -2,8 +2,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require('dotenv');
-const fs = require('fs');
 const csv = require('csv-parser');
+const multer = require('multer');
+const stream = require('stream');
+const path = require('path');
 
 /* Load environment variables from .env file */
 dotenv.config();
@@ -13,97 +15,75 @@ const uri = process.env.MONGODB_CONNECTION;
 
 const app = express();
 
-/* Define Mongoose schema and model for the sales data */
-const salesSchema = new mongoose.Schema({
-    orderNumber: Number,
-    quantityOrdered: Number,
-    priceEach: Number,
-    orderLineNumber: Number,
-    sales: Number,
-    orderDate: Date,
-    status: String,
-    qtrId: Number,
-    monthId: Number,
-    yearId: Number,
-    productLine: String,
-    msrp: Number,
-    productCode: String,
-    customerName: String,
-    phone: String,
-    addressLine1: String,
-    addressLine2: String,
-    city: String,
-    state: String,
-    postalCode: String,
-    country: String,
-    territory: String,
-    contactLastName: String,
-    contactFirstName: String,
-    dealSize: String
-});
+/* Middleware to serve static files */
+app.use(express.static(path.join(__dirname, 'public')));
 
-const Sale = mongoose.model('Sale', salesSchema);
+/* Serve the HTML file on the root URL */
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'import.html')); // Adjust the path as needed
+});
 
 /* Async function to connect to MongoDB */
 async function connect() {
     try {
-        await mongoose.connect(uri);
+        await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
         console.log("Connected to MongoDB");
     } catch (error) {
         console.error("Error occurred while connecting to MongoDB:", error);
     }
 }
 
-/* Function to import data from CSV and insert it into MongoDB */
-function importCSVData(filePath) {
+/* Configure Multer for file upload */
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+/* Function to dynamically create a Mongoose schema */
+function createDynamicSchema(data) {
+    const schemaFields = {};
+    Object.keys(data).forEach(key => {
+        schemaFields[key] = String; // Assuming all fields are strings, adjust as needed
+    });
+    return new mongoose.Schema(schemaFields);
+}
+
+/* Route to handle CSV file upload */
+app.post('/upload', upload.single('csvFile'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).send("No file uploaded.");
+    }
+
     const salesData = [];
-    fs.createReadStream(filePath)
+    const csvBufferStream = new stream.PassThrough();
+    csvBufferStream.end(req.file.buffer); // End the stream with the uploaded file's buffer
+
+    csvBufferStream
         .pipe(csv())
         .on('data', (row) => {
-            const sale = new Sale({
-                orderNumber: Number(row.ORDERNUMBER),
-                quantityOrdered: Number(row.QUANTITYORDERED),
-                priceEach: parseFloat(row.PRICEEACH),
-                orderLineNumber: Number(row.ORDERLINENUMBER),
-                sales: parseFloat(row.SALES),
-                orderDate: new Date(row.ORDERDATE),
-                status: row.STATUS,
-                qtrId: Number(row.QTR_ID),
-                monthId: Number(row.MONTH_ID),
-                yearId: Number(row.YEAR_ID),
-                productLine: row.PRODUCTLINE,
-                msrp: parseFloat(row.MSRP),
-                productCode: row.PRODUCTCODE,
-                customerName: row.CUSTOMERNAME,
-                phone: row.PHONE,
-                addressLine1: row.ADDRESSLINE1,
-                addressLine2: row.ADDRESSLINE2 || null, // Handle potential empty values
-                city: row.CITY,
-                state: row.STATE || null, // Handle potential empty values
-                postalCode: row.POSTALCODE || null, // Handle potential empty values
-                country: row.COUNTRY,
-                territory: row.TERRITORY,
-                contactLastName: row.CONTACTLASTNAME,
-                contactFirstName: row.CONTACTFIRSTNAME,
-                dealSize: row.DEALSIZE
-            });
-            salesData.push(sale);
+            salesData.push(row); // Store the row data
         })
         .on('end', async () => {
             try {
+                if (salesData.length === 0) {
+                    return res.status(400).send("No data found in CSV file.");
+                }
+
+                const Sale = mongoose.model('Sale', createDynamicSchema(salesData[0])); // Create schema from the first row
                 await Sale.insertMany(salesData);
                 console.log('CSV data has been successfully imported into MongoDB');
+                res.send('CSV data has been successfully imported into MongoDB');
             } catch (error) {
                 console.error('Error inserting data into MongoDB:', error);
+                res.status(500).send('Error inserting data into MongoDB');
             }
+        })
+        .on('error', (error) => {
+            console.error('Error parsing CSV file:', error);
+            res.status(500).send('Error parsing CSV file');
         });
-}
+});
 
 /* Connect to MongoDB */
 connect();
-
-/* Import data from CSV after MongoDB connection */
-importCSVData('./sales_data_sample.csv');
 
 /* Start the server */
 app.listen(8000, () => {
