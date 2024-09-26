@@ -5,7 +5,7 @@ Sales file uploaded is a temporary file we used to check connectivity.
 
 ### **Clone the Repository**
    ```bash
-   git clone git clone https://github.com/24Hoshiko/Local-Business-Insight-Platform.git
+   git clone https://github.com/24Hoshiko/Local-Business-Insight-Platform.git
    cd Local-Business-Insight-Platform
    cd server
    npm install
