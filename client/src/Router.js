@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+import Signin from './pages/Signin';
 
 
 import ScrollToTop from './ScrollToTop';
+import Signin from './pages/Signin';
 
 
 function AppRouter() {
@@ -10,7 +11,7 @@ function AppRouter() {
     <>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Signin />} />
       </Routes>
     </>
   );
