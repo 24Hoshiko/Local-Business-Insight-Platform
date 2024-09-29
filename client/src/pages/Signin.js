@@ -135,22 +135,52 @@ const Signin = () => {
                 </div>
 
                 <div id="signUpForm" className="form">
-                    <h2>Sign Up</h2>
-                    <h3 id="registrationTitle">User Registration</h3>
-                    <div className="user-type-container">
+                    
+                    <div className="user-type-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
                         <button
                             className="user-type-btn active"
                             onClick={() => selectUserType('customer')}
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c2925e'} // Hover color
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d8b48b'} // Original color
+                            style={{
+                                padding: '10px 20px',
+                                border: 'none',
+                                borderRadius: '5px',
+                                backgroundColor: '#d8b48b', // Original color
+                                color: 'rgb(45, 27, 4)',
+                                cursor: 'pointer',
+                                whiteSpace: 'normal',
+                                textAlign: 'center',
+                                minWidth: '100px',
+                            }}
                         >
                             Customer
                         </button>
                         <button
                             className="user-type-btn"
                             onClick={() => selectUserType('business')}
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c2925e'} // Hover color
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d8b48b'} // Original color
+                            style={{
+                                padding: '10px 20px',
+                                border: 'none',
+                                borderRadius: '5px',
+                                backgroundColor: '#d8b48b', // Original color
+                                color: 'rgb(45, 27, 4)',
+                                cursor: 'pointer',
+                                whiteSpace: 'normal',
+                                textAlign: 'center',
+                                minWidth: '100px',
+                            }}
                         >
                             Business Owner
                         </button>
                     </div>
+
+
+                    <br></br>
+                    <h3 id="registrationTitle">User Registration</h3>
+                    <br></br>
 
                     <div id="customerFields" className="user-fields" style={{ display: 'block' }}>
                         <div className="formGroup">
