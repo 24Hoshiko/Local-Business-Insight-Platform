@@ -1,46 +1,56 @@
-import React, { useEffect } from 'react';
-import './Signin.module.css'; // Ensure the styles are imported
+import React, { useEffect, useState } from 'react';
+import './Signin.module.css'; 
 
 const Signin = () => {
+    const [notification, setNotification] = useState('');
+    const [error, setError] = useState({ customer: '', business: '' });
+
     useEffect(() => {
-        // Handle Customer form submission
+        const handleCustomerSubmit = (e) => {
+            e.preventDefault();
+            const password = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password === confirmPassword) {
+                setNotification('Registration successful!');
+                setError({ ...error, customer: '' });
+            } else {
+                setError({ ...error, customer: 'Passwords do not match!' });
+            }
+        };
+
+        const handleBusinessSubmit = (e) => {
+            e.preventDefault();
+            const password = document.getElementById('newPasswordBusiness').value;
+            const confirmPassword = document.getElementById('confirmPasswordBusiness').value;
+
+            if (password === confirmPassword) {
+                setNotification('Registration successful!');
+                setError({ ...error, business: '' });
+            } else {
+                setError({ ...error, business: 'Passwords do not match!' });
+            }
+        };
+
         const signUpCustomerBtn = document.querySelector('#customerFields .submit-btn');
-        if (signUpCustomerBtn) {
-            signUpCustomerBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const password = document.getElementById('newPassword').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
-                const errorMessage = document.getElementById('passwordMismatch');
-
-                if (password === confirmPassword) {
-                    showNotification('Registration successful!');
-                    errorMessage.style.display = 'none';
-                } else {
-                    errorMessage.style.display = 'block';
-                    errorMessage.textContent = 'Passwords do not match!';
-                }
-            });
-        }
-
-        // Handle Business form submission
         const signUpBusinessBtn = document.querySelector('#businessFields .submit-btn');
-        if (signUpBusinessBtn) {
-            signUpBusinessBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const password = document.getElementById('newPasswordBusiness').value;
-                const confirmPassword = document.getElementById('confirmPasswordBusiness').value;
-                const errorMessage = document.getElementById('businessPasswordMismatch');
 
-                if (password === confirmPassword) {
-                    showNotification('Registration successful!');
-                    errorMessage.style.display = 'none';
-                } else {
-                    errorMessage.style.display = 'block';
-                    errorMessage.textContent = 'Passwords do not match!';
-                }
-            });
+        if (signUpCustomerBtn) {
+            signUpCustomerBtn.addEventListener('click', handleCustomerSubmit);
         }
-    }, []);
+        if (signUpBusinessBtn) {
+            signUpBusinessBtn.addEventListener('click', handleBusinessSubmit);
+        }
+
+        return () => {
+            if (signUpCustomerBtn) {
+                signUpCustomerBtn.removeEventListener('click', handleCustomerSubmit);
+            }
+            if (signUpBusinessBtn) {
+                signUpBusinessBtn.removeEventListener('click', handleBusinessSubmit);
+            }
+        };
+    }, [error]);
 
     const toggleForm = (formType) => {
         const signInForm = document.getElementById('signInForm');
@@ -80,77 +90,124 @@ const Signin = () => {
         }
     };
 
-    const showNotification = (message) => {
-        const notificationDiv = document.getElementById('successNotification');
-        const notificationMessage = document.getElementById('notificationMessage');
-
-        notificationMessage.textContent = message;
-        notificationDiv.style.display = 'block';
-    };
-
     return (
         <div className="container">
             <div className="header">
-                <button id="signInBtn" className="toggle-btn active" aria-pressed="true" onClick={() => toggleForm('signIn')}>Sign In</button>
-                <button id="signUpBtn" className="toggle-btn" aria-pressed="false" onClick={() => toggleForm('signUp')}>Sign Up</button>
+                <button
+                    id="signInBtn"
+                    className="toggle-btn active"
+                    aria-pressed="true"
+                    onClick={() => toggleForm('signIn')}
+                >
+                    Sign In
+                </button>
+                <button
+                    id="signUpBtn"
+                    className="toggle-btn"
+                    aria-pressed="false"
+                    onClick={() => toggleForm('signUp')}
+                >
+                    Sign Up
+                </button>
             </div>
             <div className="form-container">
-                <div id="successNotification" className="notification">
-                    <p id="notificationMessage"></p>
-                </div>
+                {notification && (
+                    <div id="successNotification" className="notification">
+                        <p id="notificationMessage">{notification}</p>
+                    </div>
+                )}
 
                 <div id="signInForm" className="form active">
                     <h2>Sign In</h2>
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" required />
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" required />
+                    <div className="formGroup">
+                        <label htmlFor="email">Email</label>
+                        <input type="email" id="email" required />
+                    </div>
+                    <div className="formGroup">
+                        <label htmlFor="password">Password</label>
+                        <input type="password" id="password" required />
+                    </div>
                     <button className="submit-btn">Login</button>
-                    <p>Don't have an account? <a onClick={() => toggleForm('signUp')}>Sign Up</a></p>
+                    <p>
+                        Don't have an account?{' '}
+                        <a onClick={() => toggleForm('signUp')}>Sign Up</a>
+                    </p>
                 </div>
 
                 <div id="signUpForm" className="form">
                     <h2>Sign Up</h2>
                     <h3 id="registrationTitle">User Registration</h3>
                     <div className="user-type-container">
-                        <button className="user-type-btn active" onClick={() => selectUserType('customer')}>Customer</button>
-                        <button className="user-type-btn" onClick={() => selectUserType('business')}>Business Owner</button>
+                        <button
+                            className="user-type-btn active"
+                            onClick={() => selectUserType('customer')}
+                        >
+                            Customer
+                        </button>
+                        <button
+                            className="user-type-btn"
+                            onClick={() => selectUserType('business')}
+                        >
+                            Business Owner
+                        </button>
                     </div>
 
                     <div id="customerFields" className="user-fields" style={{ display: 'block' }}>
-                        <label htmlFor="customerName">Full Name</label>
-                        <input type="text" id="customerName" required />
-                        <label htmlFor="customerEmail">Email</label>
-                        <input type="email" id="customerEmail" required />
-                        <label htmlFor="newPassword">New Password</label>
-                        <input type="password" id="newPassword" required />
-                        <label htmlFor="confirmPassword">Confirm Password</label>
-                        <input type="password" id="confirmPassword" required />
-                        <p id="passwordMismatch" className="error-message" style={{ display: 'none' }}></p>
+                        <div className="formGroup">
+                            <label htmlFor="customerName">Full Name</label>
+                            <input type="text" id="customerName" required />
+                        </div>
+                        <div className="formGroup">
+                            <label htmlFor="customerEmail">Email</label>
+                            <input type="email" id="customerEmail" required />
+                        </div>
+                        <div className="formGroup">
+                            <label htmlFor="newPassword">New Password</label>
+                            <input type="password" id="newPassword" required />
+                        </div>
+                        <div className="formGroup">
+                            <label htmlFor="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" required />
+                        </div>
+                        {error.customer && <p className="error-message">{error.customer}</p>}
                         <button className="submit-btn">Submit</button>
                     </div>
 
                     <div id="businessFields" className="user-fields" style={{ display: 'none' }}>
-                        <label htmlFor="businessName">Business Name</label>
-                        <input type="text" id="businessName" required />
-                        <label htmlFor="businessEmail">Email</label>
-                        <input type="email" id="businessEmail" required />
-                        <label htmlFor="contactNumber">Contact</label>
-                        <input type="tel" id="contactNumber" required />
-                        <label htmlFor="newPasswordBusiness">New Password</label>
-                        <input type="password" id="newPasswordBusiness" required />
-                        <label htmlFor="confirmPasswordBusiness">Confirm Password</label>
-                        <input type="password" id="confirmPasswordBusiness" required />
-                        <p id="businessPasswordMismatch" className="error-message" style={{ display: 'none' }}></p>
-                        <label htmlFor="logoUpload">Business Logo</label>
-                        <input type="file" id="logoUpload" name="logo" accept="image/*" />
+                        <div className="formGroup">
+                            <label htmlFor="businessName">Business Name</label>
+                            <input type="text" id="businessName" required />
+                        </div>
+                        <div className="formGroup">
+                            <label htmlFor="businessEmail">Email</label>
+                            <input type="email" id="businessEmail" required />
+                        </div>
+                        <div className="formGroup">
+                            <label htmlFor="contactNumber">Contact</label>
+                            <input type="tel" id="contactNumber" required />
+                        </div>
+                        <div className="formGroup">
+                            <label htmlFor="newPasswordBusiness">New Password</label>
+                            <input type="password" id="newPasswordBusiness" required />
+                        </div>
+                        <div className="formGroup">
+                            <label htmlFor="confirmPasswordBusiness">Confirm Password</label>
+                            <input type="password" id="confirmPasswordBusiness" required />
+                        </div>
+                        {error.business && <p className="error-message">{error.business}</p>}
+                        <div className="formGroup">
+                            <label htmlFor="logoUpload">Business Logo</label>
+                            <input type="file" id="logoUpload" name="logo" accept="image/*" />
+                        </div>
                         <button className="submit-btn">Submit</button>
                     </div>
-                    <p>Already have an account? <a onClick={() => toggleForm('signIn')}>Sign In</a></p>
+                    <p>
+                        Already have an account? <a onClick={() => toggleForm('signIn')}>Sign In</a>
+                    </p>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Signin; // Exporting the Signin component
+export default Signin;
