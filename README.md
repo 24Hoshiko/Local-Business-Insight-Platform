@@ -7,6 +7,10 @@ Sales file uploaded is a temporary file we used to check connectivity.
    ```bash
    git clone https://github.com/24Hoshiko/Local-Business-Insight-Platform.git
    cd Local-Business-Insight-Platform
+   #server side
    cd server
    npm install
    node serverMongoDB.js
+   #clint side
+   cd clint
+   npm run dev
