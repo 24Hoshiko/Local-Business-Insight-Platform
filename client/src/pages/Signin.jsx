@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Signin.module.css'; 
+import '../styles/Signin.css'; 
 
 const Signin = () => {
     const [notification, setNotification] = useState('');
@@ -91,6 +91,7 @@ const Signin = () => {
     };
 
     return (
+        <div className="main-container">
         <div className="container">
             <div className="header">
                 <button
@@ -236,6 +237,7 @@ const Signin = () => {
                     </p>
                 </div>
             </div>
+        </div>
         </div>
     );
 };

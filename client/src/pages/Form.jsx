@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './App.css';
-import TextInput from './components/TextInput';
-import Rating from './components/Rating';
-import TextReview from './components/TextReview';
-import CheckboxGroup from './components/CheckboxGroup';
+import '../styles/Form.css';
+import TextInput from '../components/form/TextInput.jsx';
+import Rating from '../components/form/Rating.jsx';
+import TextReview from '../components/form/TextReview.jsx';
+import CheckboxGroup from '../components/form/CheckboxGroup.jsx';
 
 function App() {
   const items = [
@@ -69,6 +69,8 @@ function App() {
   };
 
   return (
+    <div className="main-container">
+
     <div className="container">
       <h1>help us serve you better <br />- Brown Bakery</h1>
       <form onSubmit={handleSubmit}>
@@ -80,7 +82,7 @@ function App() {
           value={formValues.name} 
           onChange={handleInputChange}
           error={errors.name}
-        />
+          />
         <TextInput 
           label="Contact" 
           name="contact" 
@@ -89,7 +91,7 @@ function App() {
           value={formValues.contact} 
           onChange={handleInputChange}
           error={errors.contact}
-        />
+          />
         <CheckboxGroup
           label="Items Purchased"
           name="items"
@@ -99,21 +101,22 @@ function App() {
           quantities={formValues.quantities}
           onChange={handleInputChange}
           error={errors.items || errors.quantities}
-        />
+          />
         <div>
           <label>Rate Us:</label>
           <Rating 
             rating={formValues.rating} 
             onChange={(rating) => handleInputChange('rating', rating)}
             error={errors.rating}
-          />
+            />
         </div>
         <TextReview 
           value={formValues.review}
           onChange={(review) => handleInputChange('review', review)}
-        />
+          />
         <button type="submit">Submit</button>
       </form>
+    </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-body {
-  background-image: url('background.jpg'); /* Use the image in the same folder */
+.main-container {
+  background-image: url('../assets/background.jpg'); /* Use the image in the same folder */
   background-size: cover; /* Make sure the image covers the entire background */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent the image from repeating */
