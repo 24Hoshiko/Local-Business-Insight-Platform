@@ -1,4 +1,3 @@
-// BusinessOwner.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/BusinessOwner.css';
@@ -17,17 +16,17 @@ const BusinessOwner = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+
         if (!csvFile) {
             alert("Please upload a CSV file.");
             return;
         }
 
         const formData = new FormData();
-        formData.append('file', csvFile);
+        formData.append('csvFile', csvFile);
 
         try {
-            const response = await fetch('/api/upload-csv', {
+            const response = await fetch('http://localhost:5000/api/upload-csv', {
                 method: 'POST',
                 body: formData,
             });
