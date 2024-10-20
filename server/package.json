@@ -4,11 +4,13 @@
   "description": "Mongodb connectivity",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon serverMongoDB.js"
   },
   "author": "Gaganjot Kaur Badwal",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
@@ -16,5 +18,8 @@
     "mongoose": "^8.6.3",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
