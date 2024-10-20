@@ -6,6 +6,11 @@ const csv = require('csv-parser');
 const multer = require('multer');
 const stream = require('stream');
 const path = require('path');
+const cors = require('cors');
+
+const customerRoutes = require('./routes/customer');
+const businessRoutes = require('./routes/business');
+
 
 /* Load environment variables from .env file */
 dotenv.config();
@@ -14,7 +19,7 @@ dotenv.config();
 const uri = process.env.MONGODB_CONNECTION;
 
 const app = express();
-
+app.use(cors());
 /* Middleware to serve static files */
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -22,6 +27,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'import.html')); // Adjust the path as needed
 });
+
+app.use(express.json());
+app.use('/business', businessRoutes);
+app.use('/customer', customerRoutes);
+
 
 /* Async function to connect to MongoDB */
 async function connect() {
