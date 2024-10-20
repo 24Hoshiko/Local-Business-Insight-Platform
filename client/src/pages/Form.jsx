@@ -30,7 +30,7 @@ function App() {
     let formErrors = {};
 
     if (!formValues.name.trim()) formErrors.name = "Name is required";
-    
+
     if (!formValues.contact.trim()) {
       formErrors.contact = "Contact number is required";
     } else if (!/^\d{10}$/.test(formValues.contact)) {
@@ -50,73 +50,105 @@ function App() {
     return Object.keys(formErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validate()) {
-      setFormValues({
-        name: '',
-        contact: '',
-        items: {},
-        quantities: {},
-        rating: null,
-        review: ''
+  const handleInputChange = (name, value) => {
+    if (name === 'items') {
+      // If items is updated, adjust quantities accordingly
+      const newQuantities = { ...formValues.quantities };
+      Object.keys(value).forEach((item) => {
+        if (value[item]) {
+          // If the item is selected, ensure there is a quantity entry
+          newQuantities[item] = newQuantities[item] || 1; // Default quantity to 1
+        } else {
+          // If the item is unselected, remove it from quantities
+          delete newQuantities[item];
+        }
       });
+      setFormValues((prev) => ({ ...prev, [name]: value, quantities: newQuantities }));
+    } else {
+      setFormValues((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleInputChange = (name, value) => {
-    setFormValues((prev) => ({ ...prev, [name]: value }));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (validate()) {
+      try {
+        const response = await fetch('http://localhost:5000/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formValues), // Send form values
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert(data.message); // Show success message
+          // Reset form values
+          setFormValues({
+            name: '',
+            contact: '',
+            items: {},
+            quantities: {},
+            rating: null,
+            review: ''
+          });
+        } else {
+          alert(data.message); // Show error message
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    }
   };
 
   return (
     <div className="main-container">
-
-    <div className="form-container">
-      <h1>help us serve you better <br />- Brown Bakery</h1>
-      <form onSubmit={handleSubmit}>
-        <TextInput 
-          label="Name" 
-          name="name" 
-          placeholder="Enter your name" 
-          required={true} 
-          value={formValues.name} 
-          onChange={handleInputChange}
-          error={errors.name}
+      <div className="form-container">
+        <h1>Help Us Serve You Better <br /> - Brown Bakery</h1>
+        <form onSubmit={handleSubmit}>
+          <TextInput 
+            label="Name" 
+            name="name" 
+            placeholder="Enter your name" 
+            required={true} 
+            value={formValues.name} 
+            onChange={handleInputChange}
+            error={errors.name}
           />
-        <TextInput 
-          label="Contact" 
-          name="contact" 
-          placeholder="Enter Contact no." 
-          required={true} 
-          value={formValues.contact} 
-          onChange={handleInputChange}
-          error={errors.contact}
+          <TextInput 
+            label="Contact" 
+            name="contact" 
+            placeholder="Enter Contact no." 
+            required={true} 
+            value={formValues.contact} 
+            onChange={handleInputChange}
+            error={errors.contact}
           />
-        <CheckboxGroup
-          label="Items Purchased"
-          name="items"
-          options={items}
-          required={true}
-          items={formValues.items}
-          quantities={formValues.quantities}
-          onChange={handleInputChange}
-          error={errors.items || errors.quantities}
+          <CheckboxGroup
+            label="Items Purchased"
+            name="items"
+            options={items}
+            required={true}
+            items={formValues.items}
+            quantities={formValues.quantities}
+            onChange={handleInputChange}
+            error={errors.items || errors.quantities}
           />
-        <div>
-          <label>Rate Us:</label>
-          <Rating 
-            rating={formValues.rating} 
-            onChange={(rating) => handleInputChange('rating', rating)}
-            error={errors.rating}
+          <div>
+            <label>Rate Us:</label>
+            <Rating 
+              rating={formValues.rating} 
+              onChange={(rating) => handleInputChange('rating', rating)}
+              error={errors.rating}
             />
-        </div>
-        <TextReview 
-          value={formValues.review}
-          onChange={(review) => handleInputChange('review', review)}
+          </div>
+          <TextReview 
+            value={formValues.review}
+            onChange={(review) => handleInputChange('review', review)}
           />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 }
