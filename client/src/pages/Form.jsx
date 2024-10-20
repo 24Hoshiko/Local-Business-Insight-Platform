@@ -71,7 +71,7 @@ function App() {
   return (
     <div className="main-container">
 
-    <div className="container">
+    <div className="form-container">
       <h1>help us serve you better <br />- Brown Bakery</h1>
       <form onSubmit={handleSubmit}>
         <TextInput 
