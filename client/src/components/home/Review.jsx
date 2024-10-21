@@ -29,7 +29,10 @@ const reviews = [
 
 const Review = () => {
   return (
-    <div className="bg-blue-400 py-12">
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{ background: 'linear-gradient(to bottom, #ffe4c4, #f4d6d7)' }}
+    >
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">
           What Local Business Owners Say

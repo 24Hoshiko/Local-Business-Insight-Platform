@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../assets/logo.jpeg';
+import logo from '../assets/logo.jpg';
 
 function Footer() {
   return (
@@ -12,7 +12,7 @@ function Footer() {
               alt="Business Insights Logo"
               className="w-16 mb-2"
             />
-            <p>&copy; {new Date().getFullYear()} InsightGrow. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} InsightGo. All rights reserved.</p>
           </div>
 
           {/* Center Section - Navigation Links */}

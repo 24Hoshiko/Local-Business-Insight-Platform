@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import logo from '../assets/logo.jpeg'
+import logo from '../assets/logo.jpg'
 import { Link } from 'react-router-dom';
 
 function Navbar() {
@@ -11,7 +11,7 @@ function Navbar() {
 
   return (
     <nav className="bg-orange-300 shadow-lg">
-    <div className="flex items-center justify-between max-w-7xl mx-auto h-16">
+    <div className="flex items-center justify-between max-w-7xl mx-auto h-20">
         <div className='flex'>
           <img
             src={logo}
@@ -19,7 +19,7 @@ function Navbar() {
             className="hidden md:block md:w-12 md:rounded-full"
           />
           <a href="#" className="flex items-center mx-2 text-xl md:text-3xl font-bold text-gray-800">
-            Local Business Insights Platform
+            InsightGo
           </a>
         </div>
         <div className="flex space-x-4 justify-self-end">

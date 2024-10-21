@@ -1,10 +1,13 @@
+// My original
+
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
+const dotenv = require('dotenv'); // N
 const Order = require("./models/orders.model.js");
 const orderRoutes = require("./routes/order.route.js");
-
+const searchRoutes = require("./routes/search.route.js");
 // Allow requests from the frontend running on localhost:5173
 app.use(cors());
 
@@ -15,9 +18,8 @@ app.get("/", (req, res) => {
     res.send("Hello from Local Business Insight Platform");
 });
 
-// Use the order routes
-// app.use("/form", orderRoutes);
-app.use("/form", require("./routes/order.route.js"));
+app.use("/form", orderRoutes);
+app.use("/search", searchRoutes);
 
 // Connect to MongoDB
 mongoose

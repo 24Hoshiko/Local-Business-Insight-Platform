@@ -2,8 +2,10 @@
     background: linear-gradient(to bottom, #f4d6d7, #ffe4c4);
   }
   
-  .container {
+  .form-container {
     max-width: 600px;
+    max-height: 80%;
+    overflow-y: scroll;
     padding: 50px;
     margin: 0 auto;
     border-radius: 8px;
