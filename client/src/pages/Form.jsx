@@ -31,7 +31,7 @@ function App() {
     let formErrors = {};
 
     if (!formValues.name.trim()) formErrors.name = "Name is required";
-    
+
     if (!formValues.contact.trim()) {
       formErrors.contact = "Contact number is required";
     } else if (!/^\d{10}$/.test(formValues.contact)) {
@@ -51,7 +51,7 @@ function App() {
     return Object.keys(formErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
       try{
@@ -84,53 +84,52 @@ function App() {
 
   return (
     <div className="main-container">
-
-    <div className="form-container">
-      <h1>help us serve you better <br />- Brown Bakery</h1>
-      <form onSubmit={handleSubmit}>
-        <TextInput 
-          label="Name" 
-          name="name" 
-          placeholder="Enter your name" 
-          required={true} 
-          value={formValues.name} 
-          onChange={handleInputChange}
-          error={errors.name}
+      <div className="form-container">
+        <h1>Help Us Serve You Better <br /> - Brown Bakery</h1>
+        <form onSubmit={handleSubmit}>
+          <TextInput 
+            label="Name" 
+            name="name" 
+            placeholder="Enter your name" 
+            required={true} 
+            value={formValues.name} 
+            onChange={handleInputChange}
+            error={errors.name}
           />
-        <TextInput 
-          label="Contact" 
-          name="contact" 
-          placeholder="Enter Contact no." 
-          required={true} 
-          value={formValues.contact} 
-          onChange={handleInputChange}
-          error={errors.contact}
+          <TextInput 
+            label="Contact" 
+            name="contact" 
+            placeholder="Enter Contact no." 
+            required={true} 
+            value={formValues.contact} 
+            onChange={handleInputChange}
+            error={errors.contact}
           />
-        <CheckboxGroup
-          label="Items Purchased"
-          name="items"
-          options={items}
-          required={true}
-          items={formValues.items}
-          quantities={formValues.quantities}
-          onChange={handleInputChange}
-          error={errors.items || errors.quantities}
+          <CheckboxGroup
+            label="Items Purchased"
+            name="items"
+            options={items}
+            required={true}
+            items={formValues.items}
+            quantities={formValues.quantities}
+            onChange={handleInputChange}
+            error={errors.items || errors.quantities}
           />
-        <div>
-          <label>Rate Us:</label>
-          <Rating 
-            rating={formValues.rating} 
-            onChange={(rating) => handleInputChange('rating', rating)}
-            error={errors.rating}
+          <div>
+            <label>Rate Us:</label>
+            <Rating 
+              rating={formValues.rating} 
+              onChange={(rating) => handleInputChange('rating', rating)}
+              error={errors.rating}
             />
-        </div>
-        <TextReview 
-          value={formValues.review}
-          onChange={(review) => handleInputChange('review', review)}
+          </div>
+          <TextReview 
+            value={formValues.review}
+            onChange={(review) => handleInputChange('review', review)}
           />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -6,11 +6,13 @@ import v2 from '../assets/v2.png';
 import v3 from '../assets/v3.png';
 import axios from 'axios';
 
+
 const BusinessOwner = () => {
     const [csvFile, setCsvFile] = useState(null);
     const [showProfile, setShowProfile] = useState(false);
     const navigate = useNavigate();
     const {id} = useParams();
+
 
     const handleFileChange = (event) => {
         setCsvFile(event.target.files[0]);
@@ -26,7 +28,6 @@ const BusinessOwner = () => {
 
         const formData = new FormData();
         formData.append('csvFile', csvFile);
-
         
         try {
             const response = await axios.post('http://localhost:8000/upload-csv/',formData)
@@ -40,19 +41,6 @@ const BusinessOwner = () => {
                     alert(`Failed to upload the file: ${response.message}`); 
                 }
             });
-
-            // const response = await fetch('http://localhost:5000/api/upload-csv', {
-            //     method: 'POST',
-            //     body: formData,
-            // });
-
-            // if (response.ok) {
-            //     alert("File uploaded successfully! Redirecting to Recent Visualization.");
-            //     navigate('/recent-visualization');
-            // } else {
-            //     const errorData = await response.json();
-            //     alert(`Failed to upload the file: ${errorData.message}`);
-            // }
         } catch (error) {
             console.error("Error uploading the file:", error);
             alert("An error occurred. Please try again.");

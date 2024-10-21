@@ -7,7 +7,7 @@ const Signin = () => {
     const [notification, setNotification] = useState('');
     const [error, setError] = useState({ customer: '', business: '' });
     const [loginType, setLoginType] = useState('');
-
+    
     const navigate = useNavigate();
     useEffect(() => {
         const handleCustomerSubmit = async (e) => {
@@ -77,9 +77,7 @@ const Signin = () => {
                 // setError({ ...error, business: 'Registration failed. Please try again.' });
                 console.log('Try again later.')
             }      
-        };
-
-        
+        };        
 
         const loginButton = document.querySelector('#signInFrom .submit-btn');
 
@@ -92,6 +90,9 @@ const Signin = () => {
         if (signUpBusinessBtn) {
             signUpBusinessBtn.addEventListener('click', handleBusinessSubmit);
         }
+        if (loginBtn) {
+            loginBtn.addEventListener('click', handleLogin); // Add event listener for login button
+        }
 
         return () => {
             if (signUpCustomerBtn) {
@@ -100,8 +101,11 @@ const Signin = () => {
             if (signUpBusinessBtn) {
                 signUpBusinessBtn.removeEventListener('click', handleBusinessSubmit);
             }
+            if (loginBtn) {
+                loginBtn.removeEventListener('click', handleLogin); // Clean up listener
+            }
         };
-    }, [error]);
+    }, [error, navigate]); // Add navigate to the dependency array
 
 
     const toggleForm = (formType) => {
@@ -138,7 +142,7 @@ const Signin = () => {
         } else {
             customerFields.style.display = 'none';
             businessFields.style.display = 'block';
-            registrationTitle.textContent = 'Business Owner Registration';
+            registrationTitle.textContent = 'Business Registration';
         }
     };
 
