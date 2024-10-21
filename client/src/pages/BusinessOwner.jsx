@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../styles/BusinessOwner.css';
 import v1 from '../assets/v1.png';
 import v2 from '../assets/v2.png';
 import v3 from '../assets/v3.png';
+import axios from 'axios';
+
 
 const BusinessOwner = () => {
     const [csvFile, setCsvFile] = useState(null);
     const [showProfile, setShowProfile] = useState(false);
     const navigate = useNavigate();
+    const {id} = useParams();
+
 
     const handleFileChange = (event) => {
         setCsvFile(event.target.files[0]);
@@ -24,20 +28,19 @@ const BusinessOwner = () => {
 
         const formData = new FormData();
         formData.append('csvFile', csvFile);
-
+        
         try {
-            const response = await fetch('http://localhost:5000/api/upload-csv', {
-                method: 'POST',
-                body: formData,
+            const response = await axios.post('http://localhost:8000/upload-csv/',formData)
+            .then((response) => {
+                console.log(response)
+                if (response.status === 201) {
+                    alert("File uploaded successfully! Redirecting to Recent Visualization.");
+                    navigate("recent-visualization");
+                }
+                else{
+                    alert(`Failed to upload the file: ${response.message}`); 
+                }
             });
-
-            if (response.ok) {
-                alert("File uploaded successfully! Redirecting to Recent Visualization.");
-                navigate('/recent-visualization');
-            } else {
-                const errorData = await response.json();
-                alert(`Failed to upload the file: ${errorData.message}`);
-            }
         } catch (error) {
             console.error("Error uploading the file:", error);
             alert("An error occurred. Please try again.");
@@ -64,7 +67,7 @@ const BusinessOwner = () => {
             </div>
 
             <div className="business-owner-boxes">
-                <Link to="/visualization" className="box">
+                <Link to="visualization" className="box">
                     <img src={v1} alt="Visualization" className="box-image" />
                     <div className="csv-upload-container">
                         <br />
@@ -82,7 +85,7 @@ const BusinessOwner = () => {
                         </form>
                     </div>
                 </div>
-                <Link to="/customer-view" className="box">
+                <Link to="customer-view" className="box">
                     <img src={v3} alt="Customer View" className="box-image" />
                     <div className="csv-upload-container">
                         <br />

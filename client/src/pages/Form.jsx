@@ -4,6 +4,7 @@ import TextInput from '../components/form/TextInput.jsx';
 import Rating from '../components/form/Rating.jsx';
 import TextReview from '../components/form/TextReview.jsx';
 import CheckboxGroup from '../components/form/CheckboxGroup.jsx';
+import axios from 'axios';
 
 function App() {
   const items = [
@@ -50,55 +51,35 @@ function App() {
     return Object.keys(formErrors).length === 0;
   };
 
-  const handleInputChange = (name, value) => {
-    if (name === 'items') {
-      // If items is updated, adjust quantities accordingly
-      const newQuantities = { ...formValues.quantities };
-      Object.keys(value).forEach((item) => {
-        if (value[item]) {
-          // If the item is selected, ensure there is a quantity entry
-          newQuantities[item] = newQuantities[item] || 1; // Default quantity to 1
-        } else {
-          // If the item is unselected, remove it from quantities
-          delete newQuantities[item];
-        }
-      });
-      setFormValues((prev) => ({ ...prev, [name]: value, quantities: newQuantities }));
-    } else {
-      setFormValues((prev) => ({ ...prev, [name]: value }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      try {
-        const response = await fetch('http://localhost:5000/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formValues), // Send form values
-        });
-        const data = await response.json();
-        if (response.ok) {
-          alert(data.message); // Show success message
-          // Reset form values
-          setFormValues({
-            name: '',
-            contact: '',
-            items: {},
-            quantities: {},
-            rating: null,
-            review: ''
-          });
-        } else {
-          alert(data.message); // Show error message
-        }
-      } catch (error) {
+      try{
+        console.log(formValues);
+        const response = await axios.post('http://localhost:8000/submit-form',
+          formValues
+        ).then((response) => {
+          if(response.ok){
+            alert(data.message); // Show success message
+            // Reset form values
+            setFormValues({
+              name: '',
+              contact: '',
+              items: {},
+              quantities: {},
+              rating: null,
+              review: ''
+            });
+          }
+        })
+      } catch(error) {
         console.error('Error submitting form:', error);
       }
     }
+  };
+
+  const handleInputChange = (name, value) => {
+    setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
   return (

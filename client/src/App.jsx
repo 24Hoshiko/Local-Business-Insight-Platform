@@ -13,21 +13,21 @@ import CustomerView from './pages/CustomerView'; // Import Customer View Page
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/signup" element={<Signin />} />
-          <Route path="/form" element={<Form />} />
-          <Route path="/business-owner" element={<BusinessOwner />} /> {/* Business Owner Page */}
-          <Route path="/visualization" element={<Visualization />} /> {/* Visualization Page */}
-          <Route path="/recent-visualization" element={<RecentVisualization />} /> {/* Recent Visualization Page */}
-          <Route path="/customer-view" element={<CustomerView />} /> {/* Customer View Page */}
-        </Routes>
-        <Footer />
-      </div>
+      <Router>
+        <div>
+            <Navbar/>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/contact" element={<ContactUs />} />
+                <Route path="/signup" element={<Signin />} />
+                <Route path="/form/:id" element={<Form />} />
+                <Route path="/business-owner/:id" element={<BusinessOwner />} /> {/* Business Owner Page */}
+                <Route path="business-owner/:id/visualization" element={<Visualization />} /> {/* Visualization Page */}
+                <Route path="/business-owner/:id/recent-visualization" element={<RecentVisualization />} /> {/* Recent Visualization Page */}
+                <Route path="business-owner/:id/customer-view" element={<CustomerView />} /> {/* Customer View Page */}
+            </Routes>
+            <Footer/>
+        </div>
     </Router>
   );
 }
