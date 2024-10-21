@@ -5,11 +5,11 @@ const dotenv = require('dotenv');
 const path = require('path');
 const cors = require('cors');
 
-const customerRoutes = require('./routes/customer');
-const businessRoutes = require('./routes/business');
-const importRoutes = require('./routes/importData');
-const reviewRoutes = require('./routes/form');
-const searchRoutes = require('./routes/search');
+const customerRoutes = require('./routes/customerRoutes');
+const businessRoutes = require('./routes/businessRoutes');
+const importRoutes = require('./routes/importdataRoutes');
+const reviewRoutes = require('./routes/formRoutes');
+const searchRoutes = require('./routes/searchRoutes');
 
 /* Load environment variables from .env file */
 dotenv.config();

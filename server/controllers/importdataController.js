@@ -1,7 +1,7 @@
 const multer = require('multer');
 const csv = require('csv-parser');
 const fs = require('fs');
-const DynamicModel = require('../models/import_data');
+const DynamicModel = require('../models/importdataModel');
 
 // Set up Multer to handle file uploads
 const storage = multer.diskStorage({

@@ -1,4 +1,4 @@
-const businessInfo = require('../models/business_info');
+const businessInfo = require('../models/businessModel');
 
 const signInBusiness = async (req, res) => {
     try{

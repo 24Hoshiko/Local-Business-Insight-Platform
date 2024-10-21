@@ -1,4 +1,4 @@
-const customerInfo = require('../models/customer_info');
+const customerInfo = require('../models/customerModel');
 
 const signInCustomer = async (req, res) => {
     try{

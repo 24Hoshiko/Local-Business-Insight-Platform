@@ -1,5 +1,5 @@
 const express = require('express');
-const { signInCustomer, signUpCustomer, getCustomerById } = require('../controllers/customer');
+const { signInCustomer, signUpCustomer, getCustomerById } = require('../controllers/customerController');
 const router = express.Router();
 
 router.post('/signin', signInCustomer);
