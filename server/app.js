@@ -1,10 +1,10 @@
+
 // My original
 
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
-const dotenv = require('dotenv'); // N
 const Order = require("./models/orders.model.js");
 const orderRoutes = require("./routes/order.route.js");
 const searchRoutes = require("./routes/search.route.js");
