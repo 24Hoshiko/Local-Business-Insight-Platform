@@ -4,6 +4,7 @@ import TextInput from '../components/form/TextInput.jsx';
 import Rating from '../components/form/Rating.jsx';
 import TextReview from '../components/form/TextReview.jsx';
 import CheckboxGroup from '../components/form/CheckboxGroup.jsx';
+import axios from 'axios';
 
 function App() {
   const items = [
@@ -50,17 +51,30 @@ function App() {
     return Object.keys(formErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      setFormValues({
-        name: '',
-        contact: '',
-        items: {},
-        quantities: {},
-        rating: null,
-        review: ''
-      });
+      try{
+        console.log(formValues);
+        const response = await axios.post('http://localhost:8000/submit-form',
+          formValues
+        ).then((response) => {
+          if(response.ok){
+            alert(data.message); // Show success message
+            // Reset form values
+            setFormValues({
+              name: '',
+              contact: '',
+              items: {},
+              quantities: {},
+              rating: null,
+              review: ''
+            });
+          }
+        })
+      } catch(error) {
+        console.error('Error submitting form:', error);
+      }
     }
   };
 

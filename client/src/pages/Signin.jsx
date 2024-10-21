@@ -1,40 +1,91 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/Signin.css'; 
+import '../styles/SignIn.css'; 
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Signin = () => {
     const [notification, setNotification] = useState('');
     const [error, setError] = useState({ customer: '', business: '' });
+    const [loginType, setLoginType] = useState('');
 
+    const navigate = useNavigate();
     useEffect(() => {
-        const handleCustomerSubmit = (e) => {
+        const handleCustomerSubmit = async (e) => {
             e.preventDefault();
+            const fullname = document.getElementById('customerName').value;
+            const email = document.getElementById('customerEmail').value;
             const password = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
             if (password === confirmPassword) {
                 setNotification('Registration successful!');
-                setError({ ...error, customer: '' });
+                setError({ ...error,  customer: '' });
             } else {
                 setError({ ...error, customer: 'Passwords do not match!' });
             }
+            
+            const response = await axios.post('http://localhost:8000/customer/signup', {
+                fullname,
+                email,
+                password
+            }).then((response) => {
+                if (response.status === 201) {
+                    const custId = response.data.user.cust_id;
+                    // Redirect to /customer/:id
+                    navigate(`/form/${custId}`);
+                  } else {
+                    console.error(response.data.message); // Handle error appropriately
+                }
+            });
+
         };
 
-        const handleBusinessSubmit = (e) => {
+        const handleBusinessSubmit = async (e) => {
             e.preventDefault();
+            try{
+            const business_name = document.getElementById('businessName').value;
+            const email = document.getElementById('businessEmail').value;
+            const contact = document.getElementById('contactNumber').value;
             const password = document.getElementById('newPasswordBusiness').value;
             const confirmPassword = document.getElementById('confirmPasswordBusiness').value;
-
-            if (password === confirmPassword) {
-                setNotification('Registration successful!');
-                setError({ ...error, business: '' });
-            } else {
-                setError({ ...error, business: 'Passwords do not match!' });
+    
+            if (password !== confirmPassword) {
+                // setError({ ...error, business: 'Passwords do not match!' });
+                console.log('Passwords do not match!')
+                return;
             }
+            
+                const response = await axios.post('http://localhost:8000/business/signup', {
+                    business_name,
+                    email,
+                    contact,
+                    password
+                }).then((response) => {
+                    if (response.status === 201) {
+                        const businessId = response.data.user.business_id;
+                        // Redirect to /customer/:id
+                        navigate(`/business-owner/${businessId}`);
+                      } else {
+                        console.error(response.data.message); // Handle error appropriately
+                    }
+                });;
+    
+                // setNotification('Registration successful!');
+                console.log('Registration Successful!');
+                // setError({ ...error, business: '' });
+            } catch (error) {
+                // setError({ ...error, business: 'Registration failed. Please try again.' });
+                console.log('Try again later.')
+            }      
         };
+
+        
+
+        const loginButton = document.querySelector('#signInFrom .submit-btn');
 
         const signUpCustomerBtn = document.querySelector('#customerFields .submit-btn');
         const signUpBusinessBtn = document.querySelector('#businessFields .submit-btn');
-
+        
         if (signUpCustomerBtn) {
             signUpCustomerBtn.addEventListener('click', handleCustomerSubmit);
         }
@@ -51,6 +102,7 @@ const Signin = () => {
             }
         };
     }, [error]);
+
 
     const toggleForm = (formType) => {
         const signInForm = document.getElementById('signInForm');
@@ -90,6 +142,53 @@ const Signin = () => {
         }
     };
 
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try{
+            const loginType = document.querySelector('#signInForm #loginType').value;
+            const email = document.querySelector('#signInForm #email').value; 
+            const password = document.querySelector('#signInForm #password').value; 
+
+            if (loginType === 'customer'){
+                const response = await axios.post('http://localhost:8000/customer/signin', {
+                    email,
+                    password
+                }).then((response) => {
+                    if (response.status === 200) {
+                        const custId = response.data.user.cust_id;
+                        // Redirect to /customer/:id
+                        navigate(`/form/${custId}`);
+                      } else {
+                        console.error(response.data.message); // Handle error appropriately
+                    }
+                });
+                
+            } 
+            else if (loginType === 'business'){
+                const response = await axios.post('http://localhost:8000/business/signin', {
+                    email,
+                    password
+                }).then((response) => {
+                    if (response.status === 200) {
+                        const businessId = response.data.user.business_id;
+                        // Redirect to /customer/:id
+                        navigate(`/business-owner/${businessId}`);
+                      } else {
+                        console.error(response.data.message); // Handle error appropriately
+                    }
+                });
+            } 
+
+            console.log('Logged in successfully');
+        } catch (error) {
+            console.log('An error occurred');
+        }
+    }
+
+    const handleLoginTypeChange = (e) => {
+        setLoginType(e.target.value);
+    };
+
     return (
         <div className="main-container">
         <div className="container">
@@ -121,6 +220,13 @@ const Signin = () => {
                 <div id="signInForm" className="form active">
                     <h2>Sign In</h2>
                     <div className="formGroup">
+                        <label htmlFor="loginType">I am a:</label>
+                        <select id="loginType" value={loginType} onChange={handleLoginTypeChange} className="block w-full">
+                            <option value="customer">Customer</option>
+                            <option value="business">Business Owner</option>
+                        </select>
+                    </div>
+                    <div className="formGroup">
                         <label htmlFor="email">Email</label>
                         <input type="email" id="email" required />
                     </div>
@@ -128,7 +234,7 @@ const Signin = () => {
                         <label htmlFor="password">Password</label>
                         <input type="password" id="password" required />
                     </div>
-                    <button className="submit-btn">Login</button>
+                    <button className="submit-btn" onClick={handleLogin}>Login</button>
                     <p>
                         Don't have an account?{' '}
                         <a onClick={() => toggleForm('signUp')}>Sign Up</a>
@@ -226,10 +332,10 @@ const Signin = () => {
                             <input type="password" id="confirmPasswordBusiness" required />
                         </div>
                         {error.business && <p className="error-message">{error.business}</p>}
-                        <div className="formGroup">
+                        {/* <div className="formGroup">
                             <label htmlFor="logoUpload">Business Logo</label>
                             <input type="file" id="logoUpload" name="logo" accept="image/*" />
-                        </div>
+                        </div> */}
                         <button className="submit-btn">Submit</button>
                     </div>
                     <p>
