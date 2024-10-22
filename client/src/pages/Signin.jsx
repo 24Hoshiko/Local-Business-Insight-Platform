@@ -79,7 +79,7 @@ const Signin = () => {
             }      
         };        
 
-        const loginButton = document.querySelector('#signInFrom .submit-btn');
+        const loginBtn = document.querySelector('#signInFrom .submit-btn');
 
         const signUpCustomerBtn = document.querySelector('#customerFields .submit-btn');
         const signUpBusinessBtn = document.querySelector('#businessFields .submit-btn');
@@ -222,12 +222,13 @@ const Signin = () => {
                 )}
 
                 <div id="signInForm" className="form active">
-                    <h2>Sign In</h2>
+                    <h3 id="registrationTitle">Sign In</h3>
+                    <br></br>
                     <div className="formGroup">
-                        <label htmlFor="loginType">I am a:</label>
+                        <label htmlFor="loginType">Select User Type</label>
                         <select id="loginType" value={loginType} onChange={handleLoginTypeChange} className="block w-full">
                             <option value="customer">Customer</option>
-                            <option value="business">Business Owner</option>
+                            <option value="business">Business</option>
                         </select>
                     </div>
                     <div className="formGroup">
@@ -247,7 +248,7 @@ const Signin = () => {
 
                 <div id="signUpForm" className="form">
                     
-                    <div className="user-type-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
+                    <div className="user-type-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', marginBottom: '1px', marginTop: '-40px' }}>
                         <button
                             className="user-type-btn active"
                             onClick={() => selectUserType('customer')}
@@ -284,16 +285,17 @@ const Signin = () => {
                                 minWidth: '100px',
                             }}
                         >
-                            Business Owner
+                            Business
                         </button>
                     </div>
 
 
                     <br></br>
-                    <h3 id="registrationTitle">User Registration</h3>
                     <br></br>
 
                     <div id="customerFields" className="user-fields" style={{ display: 'block' }}>
+                        <h3 id="registrationTitle">User Registration</h3>
+                        <br></br>
                         <div className="formGroup">
                             <label htmlFor="customerName">Full Name</label>
                             <input type="text" id="customerName" required />
@@ -314,7 +316,10 @@ const Signin = () => {
                         <button className="submit-btn">Submit</button>
                     </div>
 
+
                     <div id="businessFields" className="user-fields" style={{ display: 'none' }}>
+                        <h3 id="registrationTitle">Business Registration</h3>
+                        <br></br>
                         <div className="formGroup">
                             <label htmlFor="businessName">Business Name</label>
                             <input type="text" id="businessName" required />

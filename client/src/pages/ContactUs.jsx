@@ -2,10 +2,15 @@ import React from 'react';
 
 const ContactUs = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold text-center mb-4">Contact Us</h1>
+    <div
+      className="flex flex-col items-center justify-center min-h-screen p-6"
+      style={{
+        background: 'linear-gradient(to bottom, #f4d6d7, #ffe4c4)',
+      }}
+    >
+      <h1 className="text-3xl font-bold text-center mb-4 text-gray-800">Contact Us</h1>
       <p className="mb-8 text-gray-700">We'd love to hear from you! Please fill out the form below.</p>
-      
+
       <form className="w-full max-w-lg bg-white shadow-md rounded-lg p-8">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">

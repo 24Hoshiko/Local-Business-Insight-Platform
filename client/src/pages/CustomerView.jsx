@@ -34,8 +34,7 @@ const CustomerView = () => {
 
     return (
         <div className="customer-view-container">
-            <h2>Customer View</h2>
-            <form onSubmit={handleSearch}>
+                <form onSubmit={handleSearch}>
                 <div>
                     <label>
                         Search by Name:

@@ -15,7 +15,7 @@ const searchRoutes = require('./routes/searchRoutes');
 dotenv.config();
 
 /* Get MongoDB connection string from .env */
-const uri = process.env.MONGODB_CONNECTION;
+const uri = process.env.MONGO_URI;
 
 const app = express();
 app.use(cors());
