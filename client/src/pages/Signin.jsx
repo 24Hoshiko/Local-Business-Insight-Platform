@@ -31,10 +31,9 @@ const Signin = () => {
             }).then((response) => {
                 if (response.status === 201) {
                     const custId = response.data.user.cust_id;
-                    // Redirect to /customer/:id
                     navigate(`/form/${custId}`);
                   } else {
-                    console.error(response.data.message); // Handle error appropriately
+                    console.error(response.data.message); 
                 }
             });
 
@@ -50,7 +49,6 @@ const Signin = () => {
             const confirmPassword = document.getElementById('confirmPasswordBusiness').value;
     
             if (password !== confirmPassword) {
-                // setError({ ...error, business: 'Passwords do not match!' });
                 console.log('Passwords do not match!')
                 return;
             }
@@ -63,18 +61,14 @@ const Signin = () => {
                 }).then((response) => {
                     if (response.status === 201) {
                         const businessId = response.data.user.business_id;
-                        // Redirect to /customer/:id
                         navigate(`/business-owner/${businessId}`);
                       } else {
-                        console.error(response.data.message); // Handle error appropriately
+                        console.error(response.data.message); 
                     }
                 });;
     
-                // setNotification('Registration successful!');
                 console.log('Registration Successful!');
-                // setError({ ...error, business: '' });
             } catch (error) {
-                // setError({ ...error, business: 'Registration failed. Please try again.' });
                 console.log('Try again later.')
             }      
         };        
@@ -91,7 +85,7 @@ const Signin = () => {
             signUpBusinessBtn.addEventListener('click', handleBusinessSubmit);
         }
         if (loginBtn) {
-            loginBtn.addEventListener('click', handleLogin); // Add event listener for login button
+            loginBtn.addEventListener('click', handleLogin); 
         }
 
         return () => {
@@ -102,10 +96,10 @@ const Signin = () => {
                 signUpBusinessBtn.removeEventListener('click', handleBusinessSubmit);
             }
             if (loginBtn) {
-                loginBtn.removeEventListener('click', handleLogin); // Clean up listener
+                loginBtn.removeEventListener('click', handleLogin); 
             }
         };
-    }, [error, navigate]); // Add navigate to the dependency array
+    }, [error, navigate]); 
 
 
     const toggleForm = (formType) => {
@@ -160,10 +154,9 @@ const Signin = () => {
                 }).then((response) => {
                     if (response.status === 200) {
                         const custId = response.data.user.cust_id;
-                        // Redirect to /customer/:id
                         navigate(`/form/${custId}`);
                       } else {
-                        console.error(response.data.message); // Handle error appropriately
+                        console.error(response.data.message);
                     }
                 });
                 
@@ -175,10 +168,10 @@ const Signin = () => {
                 }).then((response) => {
                     if (response.status === 200) {
                         const businessId = response.data.user.business_id;
-                        // Redirect to /customer/:id
+
                         navigate(`/business-owner/${businessId}`);
                       } else {
-                        console.error(response.data.message); // Handle error appropriately
+                        console.error(response.data.message);
                     }
                 });
             } 
@@ -252,13 +245,13 @@ const Signin = () => {
                         <button
                             className="user-type-btn active"
                             onClick={() => selectUserType('customer')}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c2925e'} // Hover color
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d8b48b'} // Original color
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c2925e'}
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d8b48b'}
                             style={{
                                 padding: '10px 20px',
                                 border: 'none',
                                 borderRadius: '5px',
-                                backgroundColor: '#d8b48b', // Original color
+                                backgroundColor: '#d8b48b',
                                 color: 'rgb(45, 27, 4)',
                                 cursor: 'pointer',
                                 whiteSpace: 'normal',
@@ -271,13 +264,13 @@ const Signin = () => {
                         <button
                             className="user-type-btn"
                             onClick={() => selectUserType('business')}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c2925e'} // Hover color
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d8b48b'} // Original color
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c2925e'}
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d8b48b'} 
                             style={{
                                 padding: '10px 20px',
                                 border: 'none',
                                 borderRadius: '5px',
-                                backgroundColor: '#d8b48b', // Original color
+                                backgroundColor: '#d8b48b',
                                 color: 'rgb(45, 27, 4)',
                                 cursor: 'pointer',
                                 whiteSpace: 'normal',
@@ -341,10 +334,6 @@ const Signin = () => {
                             <input type="password" id="confirmPasswordBusiness" required />
                         </div>
                         {error.business && <p className="error-message">{error.business}</p>}
-                        {/* <div className="formGroup">
-                            <label htmlFor="logoUpload">Business Logo</label>
-                            <input type="file" id="logoUpload" name="logo" accept="image/*" />
-                        </div> */}
                         <button className="submit-btn">Submit</button>
                     </div>
                     <p>

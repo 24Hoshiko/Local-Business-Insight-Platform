@@ -1,8 +1,8 @@
 .main-container {
-  background-image: url('../assets/background.jpg'); /* Use the image in the same folder */
-  background-size: cover; /* Make sure the image covers the entire background */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,38 +14,38 @@
   width: 75%;
   max-width: 600px;
   max-height: 80%;
-  border: 3px solid #694e30; /* Very light brown border */
-  border-radius: 8px; /* Optional: Rounded corners */
+  border: 3px solid #694e30;
+  border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   overflow-y: scroll;
-  background-color: #fbf4eb; /* Very light cream background */
-  padding: 16px; /* Optional: Add padding for better spacing */
+  background-color: #fbf4eb;
+  padding: 16px;
 }
 
 .header {
   display: flex;
-  justify-content: center; /* Center-align the buttons */
+  justify-content: center;
   padding: 15px;
   background-color: #886948;
-  gap: 16px; /* Space between the buttons */
+  gap: 16px;
 }
 
 .toggle-btn {
   padding: 12px 20px;
-  background-color: #dbbb98; /* Light brown background for buttons */
+  background-color: #dbbb98;
   border: none;
    cursor: pointer;
   transition: 0.3s;
   outline: none;
   border-radius: 4px;
   font-size: 1em;
-  color: rgb(67, 37, 6); /* Button text color */
+  color: rgb(67, 37, 6); 
 }
 
 .toggle-btn.active {
-  background-color: #f3d7b9; /* Lighter brown for active toggle */
-  color: #694e30; /* Dark brown text for contrast */
-  border: 2px solid #696130; /* Dark brown border for active toggle */
+  background-color: #f3d7b9;
+  color: #694e30; 
+  border: 2px solid #696130; 
 }
 
 .form {
@@ -78,16 +78,16 @@ input[type="tel"] {
 button {
   width: 100%;
   padding: 12px;
-  background-color: #d8b48b; /* Light brown for buttons */
+  background-color: #d8b48b; 
   border: none;
-  color: rgb(45, 27, 4); /* White text color */
+  color: rgb(45, 27, 4); 
   border-radius: 4px;
   margin-top: 12px;
   font-size: 1em;
 }
 
 button:hover {
-  background-color: #c2925e; /* Slightly darker brown on hover */
+  background-color: #c2925e;
 }
 
 .toggle-link {
@@ -98,7 +98,7 @@ button:hover {
 }
 #registrationTitle {
   text-align: center;
-  font-size: 24px;  /* Adjust size as needed */
+  font-size: 24px; 
   font-weight: bold;
   margin-top: -15px;
   color: rgb(74, 42, 4);

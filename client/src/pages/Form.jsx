@@ -60,8 +60,7 @@ const handleSubmit = async (e) => {
           formValues
         ).then((response) => {
           if(response.ok){
-            alert(data.message); // Show success message
-            // Reset form values
+            alert(data.message);
             setFormValues({
               name: '',
               contact: '',

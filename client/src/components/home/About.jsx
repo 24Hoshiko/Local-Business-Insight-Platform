@@ -7,7 +7,7 @@ function About() {
     <div
       className="min-h-screen flex items-center justify-center px-10 py-12"
       style={{
-        background: 'linear-gradient(to bottom, #fff9f3, #ffecd0)', // Soft, light background gradient
+        background: 'linear-gradient(to bottom, #fff9f3, #ffecd0)',
         position: 'relative',
       }}
     >

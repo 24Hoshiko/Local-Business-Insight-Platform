@@ -45,7 +45,6 @@ function Navbar() {
         <Link to="/signup" className="block px-4 py-2 text-sm text-brown-800 hover:bg-orange-300">Sign Up</Link>
       </div>
 
-      {/* Custom Scrollbar CSS */}
       <style jsx>{`
         /* Custom scroll bar */
         ::-webkit-scrollbar {
