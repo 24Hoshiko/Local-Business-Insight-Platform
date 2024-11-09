@@ -5,64 +5,68 @@ const reviews = [
     name: "John Doe",
     business: "Doe's Bakery",
     review:
-      "Business Insights has transformed how we understand our customers! Their analytics helped us streamline our operations and increase profits.",
+      "InsightGo has revolutionized how we understand our customers! Their analytics helped us optimize operations and boost sales.",
     rating: 5,
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg", // Sample avatar
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     name: "Jane Smith",
-    business: "Smith's Hardware",
+    business: "Smith's Bakery",
     review:
-      "The insights we get are invaluable! We’ve seen significant improvements in sales after implementing the recommendations.",
+      "The insights we gain are invaluable! Sales have significantly improved since we started following the recommendations.",
     rating: 4,
-    avatar: "https://randomuser.me/api/portraits/women/45.jpg", // Sample avatar
+    avatar: "https://randomuser.me/api/portraits/women/45.jpg",
   },
   {
     name: "Michael Johnson",
-    business: "Johnson's Coffee House",
+    business: "Johnson's Café",
     review:
-      "As a local business, I can say this platform has helped us grow and understand our community better. Highly recommended!",
+      "As a small business, I can say this platform has helped us thrive. Highly recommended!",
     rating: 5,
-    avatar: "https://randomuser.me/api/portraits/men/86.jpg", // Sample avatar
+    avatar: "https://randomuser.me/api/portraits/men/86.jpg",
   },
 ];
 
 const Review = () => {
   return (
     <div
-      className="min-h-screen flex items-center justify-center"
-      style={{ background: 'linear-gradient(to bottom, #ffe4c4, #f4d6d7)' }}
+      className="min-h-screen flex items-center justify-center relative py-16 px-6"
+      style={{ background: 'linear-gradient(to bottom, #ffe5d9, #fff7e6)' }}
     >
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">
-          What Local Business Owners Say
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-12">
+        <h2 className="text-5xl font-bold text-gray-900 text-center mb-12">
+          What Our Clients Say
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="bg-white p-8 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105"
             >
-              <div className="flex items-center mb-4">
+              <div className="flex items-center mb-6">
                 <img
                   src={review.avatar}
                   alt={`${review.name}'s avatar`}
-                  className="w-16 h-16 rounded-full mr-4"
+                  className="w-16 h-16 rounded-full mr-4 border-4 border-[#f4a261] shadow-md"
                 />
                 <div>
                   <h3 className="text-xl font-semibold text-gray-800">
                     {review.name}
                   </h3>
-                  <p className="text-gray-500">{review.business}</p>
+                  <p className="text-gray-600">{review.business}</p>
                 </div>
               </div>
-              <p className="text-gray-600 mb-4">"{review.review}"</p>
+
+              <p className="text-gray-700 text-lg mb-6 leading-relaxed">
+                "{review.review}"
+              </p>
+
               <div className="flex">
-                {/* Render star ratings */}
                 {Array.from({ length: review.rating }).map((_, i) => (
                   <svg
                     key={i}
-                    className="w-5 h-5 text-yellow-500"
+                    className="w-6 h-6 text-yellow-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >

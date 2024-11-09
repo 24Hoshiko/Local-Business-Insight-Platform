@@ -1,38 +1,38 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import logo from '../assets/logo.jpg';
 
 function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-6">
+    <footer className="bg-gradient-to-b from-gray-900 to-gray-800 text-gray-300 py-10">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center">
-          <div className="text-sm">
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+          <div className="flex flex-col items-center md:items-start text-sm">
             <img
               src={logo}
               alt="Business Insights Logo"
-              className="w-16 mb-2"
+              className="w-20 mb-3"
             />
             <p>&copy; {new Date().getFullYear()} InsightGo. All rights reserved.</p>
           </div>
 
-          {/* Center Section - Navigation Links */}
-          <div className="space-x-6">
-            <a href="#about" className="text-gray-400 hover:text-white">
+          <div className="space-x-8">
+            <Link to="/" className="text-gray-400 hover:text-white transition-colors duration-300">
               About Us
-            </a>
-            <a href="#contact" className="text-gray-400 hover:text-white">
+            </Link>
+            <Link to="/contact" className="text-gray-400 hover:text-white transition-colors duration-300">
               Contact
-            </a>
-            <a href="#signup" className="text-gray-400 hover:text-white">
+            </Link>
+            <Link to="/signup" className="text-gray-400 hover:text-white transition-colors duration-300">
               Sign Up
-            </a>
+            </Link>
           </div>
 
-          <div className="flex space-x-4">
+          <div className="flex space-x-6">
             <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-gray-400 hover:text-white"
+                className="h-6 w-6 text-gray-400 hover:text-blue-500 transition-colors duration-300"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
@@ -44,7 +44,7 @@ function Footer() {
             <a href="https://www.twitter.com" target="_blank" rel="noreferrer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-gray-400 hover:text-white"
+                className="h-6 w-6 text-gray-400 hover:text-blue-400 transition-colors duration-300"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
@@ -56,7 +56,7 @@ function Footer() {
             <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-gray-400 hover:text-white"
+                className="h-6 w-6 text-gray-400 hover:text-blue-700 transition-colors duration-300"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
@@ -67,9 +67,13 @@ function Footer() {
             </a>
           </div>
         </div>
+
+        <div className="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+          <p>Designed by InsightGo Team</p>
+        </div>
       </div>
     </footer>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

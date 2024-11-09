@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import logo from '../assets/logo.jpg'
+import React, { useState } from 'react';
+import logo from '../assets/logo.jpg';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
@@ -7,65 +7,63 @@ function Navbar() {
 
   const toggleSidebar = () => {
     setSideBarMenu(!sideBarMenu);
-  }
+  };
 
   return (
-    <nav className="bg-orange-300 shadow-lg">
-    <div className="flex items-center justify-between max-w-7xl mx-auto h-20">
-        <div className='flex'>
+    <nav className="bg-gradient-to-r from-orange-200 to-orange-300 shadow-md">
+      <div className="flex items-center justify-between max-w-7xl mx-auto h-20 px-4">
+        <div className="flex items-center space-x-3">
           <img
             src={logo}
-            alt="Business Insights Logo"
-            className="hidden md:block md:w-12 md:rounded-full"
+            alt="Bakery Logo"
+            className="hidden md:block w-12 rounded-full shadow-lg"
           />
-          <a href="#" className="flex items-center mx-2 text-xl md:text-3xl font-bold text-gray-800">
+          <a href="#" className="text-2xl md:text-3xl font-bold text-brown-800">
             InsightGo
           </a>
         </div>
-        <div className="flex space-x-4 justify-self-end">
-          <div className="hidden md:flex items-center space-x-4 text-lg">
-            <Link to="/" className="text-gray-700 hover:text-gray-900">
-              About Us
-            </Link>
-            <Link to="/contact" className="text-gray-700 hover:text-gray-900">
-              Contact
-            </Link>
-            <Link to="/signup" className="text-gray-700 hover:text-gray-900">
-              Sign Up
-            </Link>
+        
+        <div className="hidden md:flex space-x-6 items-center text-lg text-brown-700">
+          <Link to="/" className="hover:text-brown-900 transition duration-300">About Us</Link>
+          <Link to="/contact" className="hover:text-brown-900 transition duration-300">Contact</Link>
+          <Link to="/signup" className="hover:text-brown-900 transition duration-300">Sign Up</Link>
         </div>
-        {/* Mobile menu button */}
+
         <div className="md:hidden flex items-center">
-            <button onClick={toggleSidebar} className="mobile-menu-button">
-              <svg
-                className="w-6 h-6 text-gray-800"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M4 6h16M4 12h16m-7 6h7"></path>
-              </svg>
-            </button>
+          <button onClick={toggleSidebar} className="text-brown-800 focus:outline-none">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+          </button>
         </div>
       </div>
-    </div>
-    {/* Mobile menu */}
-    <div className={`md:hidden ${sideBarMenu ? "block" : "hidden"}`}>
-        <Link to="/" className="block px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-orange-400">
-          About Us
-        </Link>
-        <Link to="/contact" className="block px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-orange-400">
-          Contact
-        </Link>
-        <Link to="/signup" className="block px-4 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-orange-400">
-          Sign Up
-        </Link>
+
+      {/* Mobile Menu */}
+      <div className={`md:hidden bg-orange-100 ${sideBarMenu ? 'block' : 'hidden'} transition duration-300`}>
+        <Link to="/" className="block px-4 py-2 text-sm text-brown-800 hover:bg-orange-300">About Us</Link>
+        <Link to="/contact" className="block px-4 py-2 text-sm text-brown-800 hover:bg-orange-300">Contact</Link>
+        <Link to="/signup" className="block px-4 py-2 text-sm text-brown-800 hover:bg-orange-300">Sign Up</Link>
       </div>
-  </nav>
-  )
+
+      {/* Custom Scrollbar CSS */}
+      <style jsx>{`
+        /* Custom scroll bar */
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+          background: #f3e0cf;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: #c85a2e;
+          border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #a34923;
+        }
+      `}</style>
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;
