@@ -4,6 +4,7 @@ import TextInput from '../components/form/TextInput.jsx';
 import Rating from '../components/form/Rating.jsx';
 import TextReview from '../components/form/TextReview.jsx';
 import CheckboxGroup from '../components/form/CheckboxGroup.jsx';
+import ThankYouReview from './ThankYouReview.jsx';
 import axios from 'axios';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
   });
 
   const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
 
   const validate = () => {
     let formErrors = {};
@@ -51,27 +53,41 @@ function App() {
     return Object.keys(formErrors).length === 0;
   };
 
-const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (validate()) {
+  //     try{
+  //       console.log(formValues);
+  //       const response = await axios.post('http://localhost:8000/submit-form',
+  //         formValues
+  //       ).then((response) => {
+  //         if(response.ok){
+  //           alert(data.message); // Show success message
+  //           // Reset form values
+  //           setFormValues({
+  //             name: '',
+  //             contact: '',
+  //             items: {},
+  //             quantities: {},
+  //             rating: null,
+  //             review: ''
+  //           });
+  //         }
+  //       })
+  //     } catch(error) {
+  //       console.error('Error submitting form:', error);
+  //     }
+  //   }
+  // };
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      try{
-        console.log(formValues);
-        const response = await axios.post('http://localhost:8000/submit-form',
-          formValues
-        ).then((response) => {
-          if(response.ok){
-            alert(data.message);
-            setFormValues({
-              name: '',
-              contact: '',
-              items: {},
-              quantities: {},
-              rating: null,
-              review: ''
-            });
-          }
-        })
-      } catch(error) {
+      try {
+        const response = await axios.post('http://localhost:8000/submit-form', formValues);
+        if (response.status === 200) {
+          setSubmitted(true); // Set submitted to true on success
+        }
+      } catch (error) {
         console.error('Error submitting form:', error);
       }
     }
@@ -80,6 +96,9 @@ const handleSubmit = async (e) => {
   const handleInputChange = (name, value) => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
+  if (submitted) {
+    return <ThankYouReview />; // Render Thank You page if submitted is true
+  }
 
   return (
     <div className="main-container">
