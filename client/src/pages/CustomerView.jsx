@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  
 import '../styles/CustomerView.css';
 
 const CustomerView = () => {
@@ -9,6 +10,7 @@ const CustomerView = () => {
     });
     const [records, setRecords] = useState([]);
     const [error, setError] = useState('');
+    const navigate = useNavigate(); // Use navigate from react-router-dom
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,6 +28,9 @@ const CustomerView = () => {
             }
             const data = await response.json();
             setRecords(data);
+
+            // Redirect to the "thank you" page after fetching the data
+            navigate('/thank-you-review'); 
         } catch (err) {
             setError(err.message);
             console.error('Error fetching records:', err);
@@ -34,7 +39,7 @@ const CustomerView = () => {
 
     return (
         <div className="customer-view-container">
-                <form onSubmit={handleSearch}>
+            <form onSubmit={handleSearch}>
                 <div>
                     <label>
                         Search by Name:
