@@ -12,3 +12,5 @@ We propose the development of a local business insight platform website, which e
    #clint side
    cd clint
    npm run dev
+
+   npm install dotenv
